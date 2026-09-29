@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cloakin — The Truth Factory. A place to explore questions through sources, connections, context, evidence, and ideas." />
+  <meta name="theme-color" content="#050505" />
+  <title>Cloakin - The Truth Factory</title>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --burgundy: #8b1d32;
+      --burgundy-bright: #b52d45;
+      --warm: #f2dfd3;
+      --text: #f4eee9;
+      --muted: #a79d9a;
+      --line: rgba(255,255,255,.09);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    /* ---------- Navigation ---------- */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(5,5,5,.48);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(18px);
+      transition: background .35s ease, border-color .35s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(5,5,5,.82);
+      border-color: var(--line);
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* Single C — intentionally simple */
+    .brand-mark {
+      width: 25px;
+      height: 25px;
+      border: 4px solid var(--burgundy-bright);
+      border-right-color: transparent;
+      border-radius: 50%;
+      transform: rotate(-14deg);
+      box-shadow: 0 0 18px rgba(181,45,69,.22);
+      animation: logoBreathe 4s ease-in-out infinite;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color .2s ease;
+    }
+
+    .nav-link:hover { color: var(--text); }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 130px 0 90px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: -5%;
+      z-index: -3;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(5,5,5,.90) 0%,
+          rgba(5,5,5,.67) 42%,
+          rgba(5,5,5,.45) 100%
+        ),
+        url("assets/portal.png") center center / cover no-repeat;
+      opacity: .72;
+      transform: scale(1.05);
+      animation: portalDrift 18s ease-in-out infinite alternate;
+      filter: saturate(.9);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(to bottom, rgba(5,5,5,.15), rgba(5,5,5,.85) 88%, var(--bg)),
+        radial-gradient(circle at 65% 45%, transparent 0%, rgba(5,5,5,.5) 65%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      animation: heroEnter 1.15s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .eyebrow {
+      color: #c47a87;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(56px, 10vw, 116px);
+      line-height: .94;
+      letter-spacing: -.045em;
+    }
+
+    .wordmark .cloak {
+      color: var(--burgundy-bright);
+    }
+
+    .wordmark .in {
+      color: var(--warm);
+      text-shadow: 0 0 28px rgba(242,223,211,.12);
+    }
+
+    .hero-title-accent {
+      display: block;
+      color: var(--text);
+      margin-top: 10px;
+    }
+
+    .hero-subtitle {
+      max-width: 690px;
+      margin: 30px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 38px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      padding: 13px 21px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.2);
+    }
+
+    .button-primary {
+      background: var(--burgundy);
+      border-color: var(--burgundy);
+      box-shadow: 0 8px 35px rgba(139,29,50,.18);
+    }
+
+    .button-primary:hover {
+      background: var(--burgundy-bright);
+      border-color: var(--burgundy-bright);
+    }
+
+    /* ---------- Sections ---------- */
+
+    section {
+      padding: 120px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-kicker {
+      color: var(--burgundy-bright);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      max-width: 780px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+
+    .section-copy {
+      max-width: 700px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* ---------- Animated Journey ---------- */
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: 65px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .step {
+      min-height: 190px;
+      padding: 27px 24px;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,.025), transparent);
+      opacity: 0;
+      transform: translateY(42px);
+      transition:
+        opacity .7s ease,
+        transform .8s cubic-bezier(.22,1,.36,1),
+        background .35s ease;
+    }
+
+    .step:last-child { border-right: 0; }
+
+    .step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step:nth-child(1) { transition-delay: .05s; }
+    .step:nth-child(2) { transition-delay: .13s; }
+    .step:nth-child(3) { transition-delay: .21s; }
+    .step:nth-child(4) { transition-delay: .29s; }
+    .step:nth-child(5) { transition-delay: .37s; }
+
+    .step:hover {
+      background: linear-gradient(145deg, rgba(139,29,50,.16), rgba(255,255,255,.025));
+      transform: translateY(-6px);
+    }
+
+    .step-number {
+      color: #8d2638;
+      font-size: 11px;
+      letter-spacing: .15em;
+      font-weight: 700;
+    }
+
+    .step h3 {
+      margin: 42px 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: #766e6c;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* ---------- Reveal animation for page sections ---------- */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .85s ease, transform .9s cubic-bezier(.22,1,.36,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Motion ---------- */
+
+    @keyframes heroEnter {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes portalDrift {
+      from {
+        transform: scale(1.05) translate3d(-1%, 0, 0);
+      }
+      to {
+        transform: scale(1.11) translate3d(1.5%, -1%, 0);
+      }
+    }
+
+    @keyframes logoBreathe {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(181,45,69,.18);
+      }
+      50% {
+        box-shadow: 0 0 25px rgba(181,45,69,.38);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .journey {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        min-height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .step:last-child { border-bottom: 0; }
+
+      .step h3 { margin-top: 24px; }
+
+      .hero-bg {
+        background-position: 63% center;
+        opacity: .48;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span><span style="color:var(--burgundy-bright)">Cloak</span><span style="color:var(--warm)">in</span></span>
+      </a>
+      <a class="nav-link" href="#manifesto">The Manifesto</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <div class="container hero-content">
+        <div class="eyebrow">A new way to seek</div>
+
+        <h1 class="wordmark">
+          <span class="cloak">Cloak</span><span class="in">in</span>
+          <span class="hero-title-accent">The Truth Factory.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Don't just consume conclusions. Follow the path to them.
+          Explore questions through sources, connections, context, evidence,
+          arguments, and ideas.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://forms.gle/T4nW8kB1ueF4nUYaA" target="_blank">Join the waitlist</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="manifesto">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-kicker">The idea</div>
+          <h2 class="section-title">
+            Truth is not a conclusion you are handed.
+            It is a path you learn to follow.
+          </h2>
+          <p class="section-copy">
+            Cloakin is being built around a simple conviction:
+            meaningful understanding comes from going deeper; from claims to
+            sources, from sources to context, and from context to the arguments
+            that connect them.
+          </p>
+        </div>
+
+        <div class="journey">
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3>Question</h3>
+            <p>Begin with something worth understanding.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3>Discover</h3>
+            <p>Follow the ideas, people, events, and sources connected to it.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3>Examine</h3>
+            <p>Encounter evidence, arguments, context, and competing interpretations.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">04</div>
+            <h3>Connect</h3>
+            <p>See how seemingly separate pieces form a larger intellectual landscape.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">05</div>
+            <h3>Understand</h3>
+            <p>Arrive somewhere deeper than where you started.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="copyright-year"></span> Cloakin Labs</span>
+      <span>The Truth Factory</span>
+    </div>
+  </footer>
+
+  <script>
+    // Dynamic copyright year
+    document.getElementById("copyright-year").textContent = new Date().getFullYear();
+
+    // Navigation state
+    const nav = document.getElementById("nav");
+
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 20);
+    }, { passive: true });
+
+    // Scroll reveal animations
+    const animatedElements = document.querySelectorAll(".reveal, .step");
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.14,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    animatedElements.forEach(element => observer.observe(element));
+  </script>
+</body>
+</html>
